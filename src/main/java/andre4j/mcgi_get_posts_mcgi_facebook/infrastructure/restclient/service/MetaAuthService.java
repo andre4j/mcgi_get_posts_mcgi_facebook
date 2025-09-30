@@ -10,16 +10,16 @@ import andre4j.mcgi_get_posts_mcgi_facebook.infrastructure.restclient.feign.GetU
 public class MetaAuthService {
     private final GetUserTokenLongDurationFeign getAllAccessTokenLongDurationFeign;
 
-    @Value("${META_GRANT_TYPE}")
+    @Value("${meta.grant-type}")
     private String grant_type;
 
-    @Value("${META_APP_ID}")
+    @Value("${meta.app-id}")
     private String app_id;
 
-    @Value("${META_APP_SECRET}")
+    @Value("${meta.app-secret}")
     private String app_secret;
 
-    @Value("${META_FB_EXCHANGE_TOKEN}")
+    @Value("${meta.fb-exchange-token}")
     private String fb_exchange_token;
 
     public MetaAuthService(

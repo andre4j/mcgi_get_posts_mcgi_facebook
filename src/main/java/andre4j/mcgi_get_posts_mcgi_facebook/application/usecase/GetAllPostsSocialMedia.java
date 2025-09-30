@@ -1,11 +1,9 @@
 package andre4j.mcgi_get_posts_mcgi_facebook.application.usecase;
 
-import java.util.List;
-
 import org.springframework.stereotype.Service;
 
 import andre4j.mcgi_get_posts_mcgi_facebook.domain.gateway.GetAllPostsSocialMediaInterface;
-import andre4j.mcgi_get_posts_mcgi_facebook.domain.model.PostModel;
+import jakarta.annotation.PostConstruct;
 
 @Service
 public class GetAllPostsSocialMedia {
@@ -15,7 +13,8 @@ public class GetAllPostsSocialMedia {
         this.getAllPostsSocialMediaInterface = getAllPostsSocialMediaInterface;
     }
 
-    public List<PostModel> execute() {
-        return getAllPostsSocialMediaInterface.getAllPosts();
+    @PostConstruct
+    public void execute() {
+        System.out.println(getAllPostsSocialMediaInterface.getAllPosts());
     }
 }

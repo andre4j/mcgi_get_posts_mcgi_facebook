@@ -26,11 +26,12 @@ public class MetaPostGatewayImpl implements GetAllPostsSocialMediaInterface {
 
     @Override
     public List<PostModel> getAllPosts() {
-        var authService = new MetaAuthService(
+        MetaAuthService authService = new MetaAuthService(
                 getAllAccessTokenLongDurationFeign);
-        var postService = new MetaPageGetAllPostsService(getAllPostsMetaFeign,
-                authService.getLongDurationAccessToken().access_token());
 
-        return metaPostsMapper.toListModel(postService.getPageID().data());
+        MetaPageGetAllPostsService postService = new MetaPageGetAllPostsService(getAllPostsMetaFeign);
+
+        return metaPostsMapper
+                .toListModel(postService.getPageID(authService.getLongDurationAccessToken().access_token()).data());
     }
 }

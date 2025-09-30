@@ -8,15 +8,12 @@ import andre4j.mcgi_get_posts_mcgi_facebook.infrastructure.restclient.feign.GetA
 @Service
 public class MetaPageGetAllPostsService {
     private final GetAllPostsMetaFeign getAllPostsMetaFeign;
-    private final String access_token;
 
-    public MetaPageGetAllPostsService(GetAllPostsMetaFeign getAllPostsMetaFeign,
-            String access_token) {
+    public MetaPageGetAllPostsService(GetAllPostsMetaFeign getAllPostsMetaFeign) {
         this.getAllPostsMetaFeign = getAllPostsMetaFeign;
-        this.access_token = access_token;
     }
 
-    public MetaArrayPostsDTO getPageID() {
+    public MetaArrayPostsDTO getPageID(String access_token) {
         return getAllPostsMetaFeign.getAllPosts(access_token);
     }
 }
