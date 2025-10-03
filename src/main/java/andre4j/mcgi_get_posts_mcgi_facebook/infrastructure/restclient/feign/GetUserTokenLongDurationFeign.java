@@ -11,8 +11,8 @@ public interface GetUserTokenLongDurationFeign {
 
     @GetMapping(path = "/oauth/access_token")
     public UserFieldTokenDTO getAllAccessTokenLongDuration(
-            @RequestParam("grant_type") String grant_type,
-            @RequestParam("client_id") String client_id,
-            @RequestParam("client_secret") String client_secret,
-            @RequestParam("fb_exchange_token") String fb_exchange_token);
+            @RequestParam("grant_type") String grantType,
+            @RequestParam("client_id") String clientId,
+            @RequestParam("client_secret") String clientSecret,
+            @RequestParam("fb_exchange_token") String fbExchangeToken);
 }

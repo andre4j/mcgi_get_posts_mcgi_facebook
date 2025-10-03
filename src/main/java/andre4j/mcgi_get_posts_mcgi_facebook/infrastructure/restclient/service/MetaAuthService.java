@@ -11,27 +11,26 @@ public class MetaAuthService {
     private final GetUserTokenLongDurationFeign getAllAccessTokenLongDurationFeign;
 
     @Value("${meta.grant-type}")
-    private String grant_type;
+    private String grantType;
 
     @Value("${meta.app-id}")
-    private String app_id;
+    private String clientId;
 
     @Value("${meta.app-secret}")
-    private String app_secret;
+    private String appSecret;
 
     @Value("${meta.fb-exchange-token}")
-    private String fb_exchange_token;
+    private String fbExchangeToken;
 
-    public MetaAuthService(
-            GetUserTokenLongDurationFeign getAllAccessTokenLongDurationFeign) {
+    public MetaAuthService(GetUserTokenLongDurationFeign getAllAccessTokenLongDurationFeign) {
         this.getAllAccessTokenLongDurationFeign = getAllAccessTokenLongDurationFeign;
     }
 
     public UserFieldTokenDTO getLongDurationAccessToken() {
         return getAllAccessTokenLongDurationFeign.getAllAccessTokenLongDuration(
-                grant_type,
-                app_id,
-                app_secret,
-                fb_exchange_token);
+                grantType,
+                clientId,
+                appSecret,
+                fbExchangeToken);
     }
 }

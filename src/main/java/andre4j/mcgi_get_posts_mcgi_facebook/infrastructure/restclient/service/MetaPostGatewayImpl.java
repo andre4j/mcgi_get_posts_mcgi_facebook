@@ -6,32 +6,40 @@ import org.springframework.stereotype.Service;
 
 import andre4j.mcgi_get_posts_mcgi_facebook.domain.gateway.GetAllPostsSocialMediaInterface;
 import andre4j.mcgi_get_posts_mcgi_facebook.domain.model.PostModel;
-import andre4j.mcgi_get_posts_mcgi_facebook.infrastructure.restclient.feign.GetUserTokenLongDurationFeign;
+import andre4j.mcgi_get_posts_mcgi_facebook.infrastructure.restclient.dto.GetPagesDTO;
+import andre4j.mcgi_get_posts_mcgi_facebook.infrastructure.restclient.dto.MetaPostsDTO;
 import andre4j.mcgi_get_posts_mcgi_facebook.infrastructure.restclient.feign.GetAllPostsMetaFeign;
+import andre4j.mcgi_get_posts_mcgi_facebook.infrastructure.restclient.feign.GetPageAccessTokenFeign;
 import andre4j.mcgi_get_posts_mcgi_facebook.infrastructure.restclient.mapper.MetaPostsMapper;
 
 @Service
 public class MetaPostGatewayImpl implements GetAllPostsSocialMediaInterface {
     private final GetAllPostsMetaFeign getAllPostsMetaFeign;
-    private final GetUserTokenLongDurationFeign getAllAccessTokenLongDurationFeign;
+    private final MetaGetIDPageService metaGetIDPageService;
     private final MetaPostsMapper metaPostsMapper;
+    private final MetaAuthService authService;
 
     public MetaPostGatewayImpl(GetAllPostsMetaFeign getAllPostsMetaFeign,
-            GetUserTokenLongDurationFeign getAllAccessTokenLongDurationFeign,
-            MetaPostsMapper metaPostsMapper) {
+            GetPageAccessTokenFeign getPageAccessTokenFeign, MetaGetIDPageService metaGetIDPageService,
+            MetaPostsMapper metaPostsMapper, MetaAuthService authService) {
         this.getAllPostsMetaFeign = getAllPostsMetaFeign;
-        this.getAllAccessTokenLongDurationFeign = getAllAccessTokenLongDurationFeign;
+        this.metaGetIDPageService = metaGetIDPageService;
         this.metaPostsMapper = metaPostsMapper;
+        this.authService = authService;
     }
 
     @Override
-    public List<PostModel> getAllPosts() {
-        MetaAuthService authService = new MetaAuthService(
-                getAllAccessTokenLongDurationFeign);
+    public List<MetaPostsDTO> getAllPosts() {
+        final String tokenLongDuration = authService.getLongDurationAccessToken().accessToken();
 
         MetaPageGetAllPostsService postService = new MetaPageGetAllPostsService(getAllPostsMetaFeign);
 
-        return metaPostsMapper
-                .toListModel(postService.getPageID(authService.getLongDurationAccessToken().access_token()).data());
+        GetPagesDTO payloadMidiPage = metaGetIDPageService.GetPayloadMidiPage(tokenLongDuration);
+
+        String idMidiPage = payloadMidiPage.data().get(0).id();
+
+        String accessTokenMidiPage = payloadMidiPage.data().get(0).accessToken();
+
+        return postService.getPageID(idMidiPage, accessTokenMidiPage).data();
     }
 }

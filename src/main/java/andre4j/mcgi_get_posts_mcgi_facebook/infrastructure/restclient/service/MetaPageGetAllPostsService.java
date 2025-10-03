@@ -13,7 +13,7 @@ public class MetaPageGetAllPostsService {
         this.getAllPostsMetaFeign = getAllPostsMetaFeign;
     }
 
-    public MetaArrayPostsDTO getPageID(String access_token) {
-        return getAllPostsMetaFeign.getAllPosts(access_token);
+    public MetaArrayPostsDTO getPageID(String pageId, String access_token) {
+        return getAllPostsMetaFeign.getAllPosts(pageId, access_token);
     }
 }

@@ -1,9 +1,9 @@
 package andre4j.mcgi_get_posts_mcgi_facebook.infrastructure.restclient.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public record MetaPostsDTO(
-                String linkOfPost,
-                String description,
-                String story,
-                String typeOfPost,
-                String datePublish) {
+        @JsonProperty("created_time") String createdData,
+        @JsonProperty("message") String text,
+        @JsonProperty("id") String idPost) {
 }

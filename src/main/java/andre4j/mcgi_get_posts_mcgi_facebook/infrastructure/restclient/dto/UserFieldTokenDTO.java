@@ -1,9 +1,8 @@
 package andre4j.mcgi_get_posts_mcgi_facebook.infrastructure.restclient.dto;
 
-import org.springframework.stereotype.Component;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 public record UserFieldTokenDTO(
-        String access_token,
-        String token_type,
-        Number expires_in) {
+                @JsonProperty("access_token") String accessToken,
+                @JsonProperty("token_type") String tokenType) {
 }
